@@ -1,0 +1,115 @@
+# Dependencies {{{
+LoadModule setenvif_module modules/mod_setenvif.so
+# }}}
+
+# Basic {{{
+
+ServerTokens ProductOnly
+UseCanonicalName Off
+HostnameLookups Off
+ServerSignature Off
+
+Listen *:80
+NameVirtualHost *:80
+Listen *:443
+NameVirtualHost *:443
+
+BrowserMatch "Mozilla/2" nokeepalive
+BrowserMatch "MSIE 4\.0b2;" nokeepalive downgrade-1.0 force-response-1.0
+BrowserMatch "RealPlayer 4\.0" force-response-1.0
+BrowserMatch "Java/1\.0" force-response-1.0
+BrowserMatch "JDK/1\.0" force-response-1.0
+BrowserMatch "Microsoft Data Access Internet Publishing Provider" redirect-carefully
+BrowserMatch "MS FrontPage" redirect-carefully
+BrowserMatch "^WebDrive" redirect-carefully
+BrowserMatch "^WebDAVFS/1.[0123]" redirect-carefully
+BrowserMatch "^gnome-vfs/1.0" redirect-carefully
+BrowserMatch "^XML Spy" redirect-carefully
+BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
+
+AllowEncodedSlashes On
+TraceEnable off
+
+PidFile run/httpd.pid
+
+Timeout 180
+KeepAlive On
+MaxKeepAliveRequests 50
+KeepAliveTimeout 15
+
+User apache
+Group apache
+
+# }}}
+
+# Multi-processing modules {{{
+<IfModule prefork.c>
+  StartServers       8
+  MinSpareServers    5
+  MaxSpareServers   20
+  ServerLimit      256
+  MaxClients       256
+  MaxRequestsPerChild  4000
+</IfModule>
+
+# <IfModule worker.c>
+#   StartServers         4
+#   MaxClients         300
+#   MinSpareThreads     25
+#   MaxSpareThreads     75 
+#   ThreadsPerChild     25
+#   MaxRequestsPerChild  0
+# </IfModule>
+
+# }}}
+
+# Document setting {{{
+DocumentRoot "/vagrant/application/"
+DirectoryIndex index.php index.html
+AccessFileName .htaccess
+
+<Directory /vagrant/application/>
+  Options -Indexes FollowSymLinks
+  Order allow,deny 
+  Allow from all
+  AllowOverride None
+# AuthType basic
+# AuthName test
+# AuthUserFile /usr/local/passwd/.passwd
+# Require valid-user
+</Directory>
+# }}}
+
+# Log {{{
+ErrorLog logs/error_log
+LogLevel warn
+LogFormat "domain:%V\thost:%h\tserver:%A\tident:%l\tuser:%u\ttime:%{%d/%b/%Y:%H:%M:%S %z}t\tmethod:%m\tpath:%U%q\tprotocol:%H\tstatus:%>s\tsize:%b\treferer:%{Referer}i\tagent:%{User-Agent}i\tresponse_time:%D\tcookie:%{cookie}i\tset_cookie:%{Set-Cookie}o" combined
+SetEnvIf Request_URI "\.(gif|jpg|png|css|ico|js)$" no_log
+SetEnvIf User-Agent "internal dummy connection" no_log
+CustomLog "|rotatelogs /etc/httpd/logs/access_log.%Y%m%d 86400 +540" combined env=!no_log
+# }}}
+
+# FileType Charset {{{
+TypesConfig /etc/mime.types
+DefaultType text/plain
+AddDefaultCharset UTF-8
+
+<FilesMatch "\.(pdf|xlsx)$">
+  AddType application/download    .pdf .xlsx
+  Header set content-disposition attachment
+</FilesMatch>
+
+AddType application/x-compress .Z
+AddType application/x-gzip .gz .tgz
+AddType application/x-x509-ca-cert .crt
+AddType application/x-pkcs7-crl    .crl
+
+AddType "application/x-javascript; charset=UTF-8" .js
+AddType "text/css; charset=UTF-8" .css
+# }}}
+
+# Error Handling {{{
+ErrorDocument 403 "not found"
+ErrorDocument 404 "not found"
+ErrorDocument 503 "The server is down"
+# }}}

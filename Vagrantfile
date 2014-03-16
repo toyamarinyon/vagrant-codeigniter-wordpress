@@ -10,11 +10,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :virtualbox do |vb|
 
-    config.vm.network :forwarded_port, guest: 3306, host: 33066
-    config.vm.network :forwarded_port, guest: 80, host: 8899
-    config.vm.network :private_network, ip: "192.168.33.10"
+    vb.network :forwarded_port, guest: 3306, host: 33066
+    vb.network :forwarded_port, guest: 80, host: 8899
+    vb.network :private_network, ip: "192.168.33.10"
 
-    config.vm.synced_folder ".", "/vagrant", mount_options: ['dmode=777','fmode=666']
+    vb.synced_folder ".", "/vagrant", mount_options: ['dmode=777','fmode=666']
+
+    vb.memory = 512
 
   end
 
@@ -28,8 +30,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # List of recipes to run
     chef.add_recipe "git"
     chef.add_recipe "bootstrap::default"
-    chef.add_recipe "php"
-    chef.add_recipe "apache2"
+    chef.add_recipe "bootstrap::httpd"
+    chef.add_recipe "php::default"
+    chef.add_recipe "php::default"
+
+    # Custom json data
+    chef.json = {
+      "apache" => {
+        "lesten_ports" => %w[80 443]
+      }
+    }
 
   end
 
