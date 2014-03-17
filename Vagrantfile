@@ -10,13 +10,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider :virtualbox do |vb|
 
-    vb.network :forwarded_port, guest: 3306, host: 33066
-    vb.network :forwarded_port, guest: 80, host: 8899
-    vb.network :private_network, ip: "192.168.33.10"
+    config.vm.network :forwarded_port, guest: 3306, host: 33066
+    config.vm.network :forwarded_port, guest: 80, host: 8899
+    config.vm.network :private_network, ip: "192.168.33.10"
 
-    vb.synced_folder ".", "/vagrant", mount_options: ['dmode=777','fmode=666']
+    config.vm.synced_folder ".", "/vagrant", mount_options: ['dmode=777','fmode=666']
 
-    vb.memory = 512
+    vb.memory = 1024
 
   end
 
@@ -32,19 +32,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "bootstrap::default"
     chef.add_recipe "bootstrap::httpd"
     chef.add_recipe "php::default"
-    chef.add_recipe "php::default"
+    chef.add_recipe "mysql::server"
 
     # Custom json data
     chef.json = {
-      "apache" => {
-        "lesten_ports" => %w[80 443]
+      "php" => {
+        "ini" => {
+          "cookbook" => "bootstrap",
+        },
+        "install_method" => "source"
+      },
+      "mysql" => {
+        "server_root_password" => "wagahaihanekodearu",
+        "server_repl_password" => "wagahaihanekodearu",
+        "server_debian_password" => "wagahaihanekodearu"
       }
     }
 
   end
 
-   config.vm.provision :serverspec do |spec|
-     spec.pattern = "spec/default/*_spec.rb"
-   end
+   # config.vm.provision :serverspec do |spec|
+   #   spec.pattern = "spec/default/*_spec.rb"
+   # end
 
 end
