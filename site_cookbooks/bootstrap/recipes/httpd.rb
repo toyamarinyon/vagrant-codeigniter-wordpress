@@ -1,5 +1,7 @@
-package "httpd" do
-  action [:install]
+%w{httpd httpd-devel} do |pkg|
+  package pkg do
+    action [:install]
+  end
 end
 
 directory "/vagrant/application" do

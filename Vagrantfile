@@ -40,6 +40,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "ini" => {
           "cookbook" => "bootstrap",
         },
+        "version"  => "5.5.10",
+        "checksum" => "e760656f7cf2f05158f73da75e8b720b",
         "install_method" => "source"
       },
       "mysql" => {
