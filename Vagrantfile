@@ -43,4 +43,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   end
 
+   config.vm.provision :serverspec do |spec|
+     spec.pattern = "spec/default/*_spec.rb"
+   end
+
 end
