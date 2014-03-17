@@ -1,4 +1,4 @@
-%w{httpd httpd-devel} do |pkg|
+%w{httpd httpd-devel}.each do |pkg|
   package pkg do
     action [:install]
   end
