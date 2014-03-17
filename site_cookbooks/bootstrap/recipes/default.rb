@@ -1,4 +1,4 @@
-%w{ vim }.each do |pkg|
+%w{ vim re2c }.each do |pkg|
   package pkg do
     action :install
   end
