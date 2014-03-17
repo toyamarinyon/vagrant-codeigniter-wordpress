@@ -2,4 +2,4 @@
 # site :opscode
 cookbook 'git'
 cookbook 'mysql'
-cookbook 'php', git: "https://github.com/toyamarinyon/php.git"
+cookbook 'php', git: "https://github.com/toyamarinyon/php"
