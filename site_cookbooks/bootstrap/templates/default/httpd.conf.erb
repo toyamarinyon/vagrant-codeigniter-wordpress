@@ -5,6 +5,7 @@ LoadModule authz_host_module modules/mod_authz_host.so
 LoadModule log_config_module modules/mod_log_config.so
 LoadModule mime_module modules/mod_mime.so
 LoadModule headers_module modules/mod_headers.so
+LoadModule php5_module modules/libphp5.so
 # }}}
 
 # Basic {{{
@@ -98,6 +99,9 @@ CustomLog "|rotatelogs /etc/httpd/logs/access_log.%Y%m%d 86400 +540" combined en
 TypesConfig /etc/mime.types
 DefaultType text/plain
 AddDefaultCharset UTF-8
+
+AddHandler php5-script .php
+AddType text/html .php
 
 <FilesMatch "\.(pdf|xlsx)$">
   AddType application/download    .pdf .xlsx
