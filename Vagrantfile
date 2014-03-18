@@ -31,19 +31,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "git"
     chef.add_recipe "bootstrap::default"
     chef.add_recipe "bootstrap::httpd"
-    chef.add_recipe "php::default"
+    chef.add_recipe "bootstrap::php"
     chef.add_recipe "mysql::server"
 
     # Custom json data
     chef.json = {
-      "php" => {
-        "ini" => {
-          "cookbook" => "bootstrap",
-        },
-        "version"  => "5.5.10",
-        "checksum" => "e760656f7cf2f05158f73da75e8b720b",
-        "install_method" => "source"
-      },
       "mysql" => {
         "server_root_password" => "wagahaihanekodearu",
         "server_repl_password" => "wagahaihanekodearu",
