@@ -18,5 +18,5 @@ template "php.ini" do
   owner "root"
   group "root"
   mode 0644
-  notifies :reload, "service[httpd]"
+  notifies :restart, "service[httpd]"
 end
