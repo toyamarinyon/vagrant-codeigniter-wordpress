@@ -10,6 +10,10 @@ directory "/vagrant/application" do
   mode 0777
 end
 
+cookbook_file "/vagrant/application/index.php" do
+  mode 0777
+end
+
 template "httpd.conf" do
   path "/etc/httpd/conf/httpd.conf"
   source "httpd.conf.erb"
@@ -20,6 +24,6 @@ template "httpd.conf" do
 end
 
 service "httpd" do
-  supports [:restart, :reload, :status]
+  supports [:restart, :status]
   action [:enable, :start]
 end

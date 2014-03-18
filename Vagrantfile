@@ -30,9 +30,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # List of recipes to run
     chef.add_recipe "git"
     chef.add_recipe "bootstrap::default"
-    chef.add_recipe "bootstrap::httpd"
     chef.add_recipe "bootstrap::php"
+    chef.add_recipe "bootstrap::httpd"
     chef.add_recipe "mysql::server"
+    chef.add_recipe "bootstrap::wordpress"
 
     # Custom json data
     chef.json = {
