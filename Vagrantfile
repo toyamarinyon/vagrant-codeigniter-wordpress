@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.synced_folder ".", "/vagrant", mount_options: ['dmode=777','fmode=666']
 
-    vb.memory = 1024
+    vb.memory = 512
 
   end
 
@@ -41,6 +41,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "server_root_password" => "wagahaihanekodearu",
         "server_repl_password" => "wagahaihanekodearu",
         "server_debian_password" => "wagahaihanekodearu"
+      },
+      "wordpress" => {
+        "plugins" => ["custom-field-template"]
       }
     }
 

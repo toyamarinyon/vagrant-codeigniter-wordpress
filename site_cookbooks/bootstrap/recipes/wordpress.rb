@@ -12,4 +12,15 @@ bash 'install wordpress' do
   wp db create &&
   wp core install --url=192.168.33.10/wordpress --title="AwesomePress" --admin_name=admin --admin_email=toyamarinyon@gmail.com --admin_password=admin
   EOF
+  not_if { ::File.directory?('/vagrant/application/wordpress') }
+end
+
+node["wordpress"]["plugins"].each do |plugin|
+  bash 'install wordpress plugin' do
+    cwd '/vagrant/application/wordpress'
+    code <<-EOF
+    wp plugin install #{plugin} --activate
+    EOF
+    # not_if { ::File.directory?('/vagrant/application/wordpress') }
+  end
 end
