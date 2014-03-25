@@ -8,6 +8,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "centos65-x86_64"
   config.vm.box_url = "https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box"
 
+  #
+  # If do not connect to vm, try below vm.box
+  #
+  # config.vm.box = "centos62-32"
+  # config.vm.box_url = "https://dl.dropbox.com/sh/9rldlpj3cmdtntc/chqwU6EYaZ/centos-63-32bit-puppet.box"
+
   config.vm.provider :virtualbox do |vb|
 
     config.vm.network :forwarded_port, guest: 3306, host: 33066
