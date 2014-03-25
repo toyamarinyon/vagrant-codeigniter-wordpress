@@ -10,6 +10,12 @@ directory "/vagrant/application" do
   mode 0777
 end
 
+directory "/vagrant/application/codeigniter" do
+  owner "vagrant"
+  group "vagrant"
+  mode 0777
+end
+
 cookbook_file "/vagrant/application/index.php" do
   mode 0777
 end
