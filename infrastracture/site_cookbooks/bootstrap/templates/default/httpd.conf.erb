@@ -1,6 +1,7 @@
 # Dependencies {{{
 LoadModule setenvif_module modules/mod_setenvif.so
 LoadModule dir_module modules/mod_dir.so
+LoadModule alias_module modules/mod_alias.so
 LoadModule rewrite_module modules/mod_rewrite.so
 LoadModule authz_host_module modules/mod_authz_host.so
 LoadModule log_config_module modules/mod_log_config.so
@@ -75,6 +76,9 @@ DocumentRoot "/vagrant/application/"
 DirectoryIndex index.php index.html
 AccessFileName .htaccess
 
+Alias /common /vagrant/application/codeigniter/public/common
+Alias /images /vagrant/application/codeigniter/public/images
+
 <Directory /vagrant/application/>
   Options -Indexes FollowSymLinks
   Order allow,deny 
@@ -82,7 +86,7 @@ AccessFileName .htaccess
   AllowOverride None
 
   RewriteEngine ON
-  RewriteCond $1 !^(wp/*|_devlove/*|\.+html|\.+css|\.+js|\.+png|\.+gif|\.+jpg|codeigniter/public/index\.php)
+  RewriteCond $1 !^(wp/*|_devlove/*|.*\.html|.*\.css|.*\.js|.*\.png|.*\.gif|.*\.jpg|codeigniter/public/index\.php)
   RewriteRule ^(.*)$ codeigniter/public/index.php/$1
 
 # AuthType basic
