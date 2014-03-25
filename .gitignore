@@ -3,5 +3,5 @@ vendor
 cookbooks
 .vagrant
 *.lock
-application/application/wp/*
+application/wp/*
 *~
