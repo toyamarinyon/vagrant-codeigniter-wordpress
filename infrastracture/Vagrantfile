@@ -31,7 +31,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :chef_solo do |chef|
 
     chef.cookbooks_path = ["cookbooks","site_cookbooks"]
-    chef.data_bags_path = "data_bags"
 
     # List of recipes to run
     chef.add_recipe "git"
@@ -48,6 +47,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "server_root_password" => "wagahaihanekodearu",
         "server_repl_password" => "wagahaihanekodearu",
         "server_debian_password" => "wagahaihanekodearu"
+      },
+      "php" => {
+        "install_options" => "--enablerepo=ius"
       },
       "wordpress" => {
         "plugins" => ["custom-field-template"]

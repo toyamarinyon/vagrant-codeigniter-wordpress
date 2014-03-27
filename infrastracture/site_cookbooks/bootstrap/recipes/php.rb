@@ -3,7 +3,7 @@
    php54-mysql php54-odbc php54-pdo php54-pear php54-soap php54-xml}.each do |pkg|
   package pkg do
     action [:install]
-    options '--enablerepo=ius'
+    options node['php']['install_options']
   end
 end
 
