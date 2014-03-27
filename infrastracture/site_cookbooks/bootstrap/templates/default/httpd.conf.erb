@@ -86,7 +86,7 @@ Alias /images /vagrant/application/codeigniter/public/images
   AllowOverride None
 
   RewriteEngine ON
-  RewriteCond $1 !^(wp/*|_devlove/*|.*\.html|.*\.css|.*\.js|.*\.png|.*\.gif|.*\.jpg|codeigniter/public/index\.php)
+  RewriteCond $1 !^(<%= node[:httpd][:codeigniter][:ignore_rewrite_conds].join("|")%>)
   RewriteRule ^(.*)$ codeigniter/public/index.php/$1
 
 # AuthType basic
@@ -99,7 +99,7 @@ Alias /images /vagrant/application/codeigniter/public/images
 # Log {{{
 ErrorLog logs/error_log
 RewriteLog logs/rewrite_log
-RewriteLogLevel 0
+RewriteLogLevel <%= node[:httpd][:rewrite_log_revel%>
 
 LogLevel warn
 LogFormat "domain:%V\thost:%h\tserver:%A\tident:%l\tuser:%u\ttime:%{%d/%b/%Y:%H:%M:%S %z}t\tmethod:%m\tpath:%U%q\tprotocol:%H\tstatus:%>s\tsize:%b\treferer:%{Referer}i\tagent:%{User-Agent}i\tresponse_time:%D\tcookie:%{cookie}i\tset_cookie:%{Set-Cookie}o" combined
