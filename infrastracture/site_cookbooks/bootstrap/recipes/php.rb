@@ -1,8 +1,9 @@
-%W{php php-common php-cli php-bcmath php-cli php-common
-   php-devel php-gd php-imap php-mbstring php-mcrypt
-   php-mysql php-odbc php-pdo php-pear php-soap php-xml}.each do |pkg|
+%W{php54 php54-common php54-cli php54-bcmath php54-cli php54-common
+   php54-devel php54-gd php54-imap php54-mbstring php54-mcrypt
+   php54-mysql php54-odbc php54-pdo php54-pear php54-soap php54-xml}.each do |pkg|
   package pkg do
     action [:install]
+    options '--enablerepo=ius'
   end
 end
 
